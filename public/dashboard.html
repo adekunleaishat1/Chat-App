@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <title>Document</title>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24,
+          "color" #798083;
+      }
+      .userinerdiv {
+        width: 100%;
+        height: 50px;
+        background-color: #1a3741;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 20px 10px;
+        border-radius: 10px;
+        margin: 10px 0;
+        position: relative;
+      }
+      .userinerdiv h1 {
+        color: #f8f8f8;
+        font-size: 16px;
+      }
+      .alert-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 100%;
+        color: white;
+        font-size: 40px;
+        /* padding: auto 0px ; */
+      }
+      .dis-name {
+        color: white;
+        font-size: 20px;
+        font-family: monospace;
+        padding: 10px 10px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        position: absolute;
+      }
+      .chat_cont {
+        width: 60%;
+        padding: 20px 10px;
+        background-color: #1a3741;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        position: relative;
+      }
+      .sender {
+        background-color: #2b6e91; /* Different color for sender */
+        float: right;
+      }
+
+      .receiver {
+        background-color: #1a3741; /* Different color for receiver */
+        float: left;
+      }
+      .curuser {
+        width: 200px;
+        height: 150px;
+        margin: auto;
+      }
+      .side {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: start;
+        gap: 10px;
+        align-items: center;
+        background-color: transparent;
+        border: none;
+      }
+      .side p {
+        color: white;
+        font-family: monospace;
+        font-size: 16px;
+      }
+      .side span {
+        color: white;
+        font-size: 16px;
+      }
+      .side-cont {
+        width: 200px;
+        height: 400px;
+        margin: 60px auto 0px auto;
+      }
+      .profile {
+        width: 100px;
+        height: 100px;
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: bold;
+        color: #333;
+        text-transform: uppercase;
+        margin: 0px auto 10px auto;
+      }
+      .profile-circle {
+        width: 40px;
+        height: 40px;
+        background-color: #f0f0f0;
+        color: #333;
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .unread-count {
+        background-color: #061c24;
+        color: #ffffffd0;
+        border-radius: 50%;
+        padding: 3px 6px;
+        font-size: 12px;
+        position: absolute;
+        right: 4%;
+      }
+      .userinerdiv p {
+        color: white;
+        font-size: 12px;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80px;
+      }
+      #imgPreview {
+        top: -200px;
+        left: 0;
+        /* transform: translate(-50%, -50%);  */
+        position: absolute;
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="body">
+      <div class="chatcont">
+        <div class="header">
+          <h1>ChatApp</h1>
+        </div>
+        <div class="chatbox">
+          <div class="chatlist">
+            <div class="searchinp">
+              <span class="material-symbols-outlined"> search </span>
+
+              <input type="text" placeholder="Search" />
+            </div>
+            <!-- alluser chat div  -->
+            <div id="alluserdiv" class=""></div>
+          </div>
+
+          <div class="chatmessage">
+            <div id="userdiv"></div>
+            <div id="chatmessage"></div>
+            <div class="chatinput">
+              <div class="inputcont">
+                <button id="emoji-btn">
+                  <span class="material-symbols-outlined"> mood </span>
+                </button>
+                <input
+                  style="color: white"
+                  id="inpchat"
+                  placeholder="Type a message..."
+                  type="text"
+                />
+                <button>
+                  <span class="material-symbols-outlined"> attach_file </span>
+                </button>
+                <button id="uploadimage">
+                  <span class="material-symbols-outlined"> photo_camera </span>
+                </button>
+              </div>
+              <button id="record-voice-note">
+                <span class="material-symbols-outlined">mic</span>
+              </button>
+              <button onclick="sendchat()" id="sendchat-btn">
+                <span class="material-symbols-outlined">send</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chatinfo">
+        <div id="curr_user"></div>
+        <div class="side-cont">
+          <button class="side">
+            <span class="material-symbols-outlined"> vpn_key </span>
+            <p>Account</p>
+          </button>
+          <button class="side">
+            <span class="material-symbols-outlined"> chat </span>
+            <p>Chat</p>
+          </button>
+          <button class="side">
+            <span class="material-symbols-outlined"> notifications </span>
+            <p>Notification</p>
+          </button>
+          <button class="side">
+            <span class="material-symbols-outlined"> help </span>
+            <p>Help</p>
+          </button>
+          <button id="logoutuser" class="side">
+            <span class="material-symbols-outlined"> logout </span>
+            <p>Log Out</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="module">
+    import { EmojiButton } from "https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@latest/dist/index.min.js";
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut,
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      onValue,
+      push,
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+    import {
+      getStorage,
+      ref as stRef,
+      uploadBytes,
+      getDownloadURL,
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyANrzEtiTBG7SYnQJvG0-K39BVr5zMa1Tw",
+      authDomain: "december-class.firebaseapp.com",
+      databaseURL: "https://december-class-default-rtdb.firebaseio.com",
+      projectId: "december-class",
+      storageBucket: "december-class.appspot.com",
+      messagingSenderId: "345903235353",
+      appId: "1:345903235353:web:90c6f352bf6c28aeb44588",
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    const database = getDatabase();
+    const storage = getStorage();
+    let receiverid = "";
+    let chatmessage = document.getElementById("chatmessage");
+    let inpchat = document.getElementById("inpchat");
+    let sendButton = document.getElementById("sendchat-btn");
+    let recordButton = document.getElementById("record-voice-note");
+    // const recordingIndicator = document.getElementById("recording-indicator");
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let chatArray = [];
+    let selectedAudioFile = null;
+    let recordingStartTime;
+    let recordingTimerInterval;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(uid);
+        let curuserdiv = document.createElement("div");
+        curuserdiv.className = "curuser";
+
+        curuserdiv.innerHTML = `
+          <div class="profile">${user.displayName.charAt(0).toUpperCase()}</div>
+         <h1 style="text-align:center;color:white; font-size: 20px; font-family: monospace;">${
+           user.displayName
+         }</h1>
+
+       `;
+        curr_user.appendChild(curuserdiv);
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const picker = new EmojiButton();
+
+      document.querySelector("#emoji-btn").addEventListener("click", () => {
+        picker.togglePicker(document.querySelector("#emoji-btn"));
+      });
+
+      picker.on("emoji", (emoji) => {
+        console.log(emoji.emoji);
+
+        const input = document.getElementById("inpchat");
+        input.value += emoji.emoji;
+      });
+    });
+
+    console.log(auth);
+  
+
+    const chatref = ref(database, "Allchat");
+    onValue(chatref, (snapshot) => {
+      let chatData = snapshot.val();
+      if (chatData) {
+        chatArray = Object.values(chatData);
+      }
+
+      const userref = ref(database, "allusers");
+      onValue(userref, (snapshot) => {
+        alluserdiv.innerHTML = "";
+        let users = snapshot.val();
+        console.log(users);
+
+        users.map((user) => {
+          const userChats = chatArray.filter(
+            (chat) =>
+              (chat.senderId === user.id &&
+                chat.receiverId === auth.currentUser.uid) ||
+              (chat.receiverId === user.id &&
+                chat.senderId === auth.currentUser.uid)
+          );
+
+          const lastMessage = userChats[userChats.length - 1];
+
+          // Check for unread messages for this user
+          const unreadMessages = chatArray.filter(
+            (chat) =>
+              chat.senderId === user.id &&
+              chat.receiverId === auth.currentUser.uid &&
+              !chat.isread
+          );
+          console.log(unreadMessages);
+          const unreadCount = unreadMessages.length;
+
+          alluserdiv.innerHTML += `
+                <div onclick="getuser('${user.id}', '${
+            user.displayName
+          }')" class="userinerdiv">
+                    <div class="profile-circle">${user.displayName
+                      .charAt(0)
+                      .toUpperCase()}</div>
+                     <div>
+                       <h1>${user.displayName}</h1>
+                        <p>${
+                          lastMessage ? lastMessage.message : "No messages yet"
+                        }</p>
+                     </div>
+                       ${
+                         unreadCount > 0
+                           ? `<span class="unread-count">${unreadCount}</span>`
+                           : ""
+                       }
+                </div>`;
+        });
+      });
+    });
+
+    function getuser(userid, displayName) {
+      const userdiv = document.getElementById("userdiv");
+      userdiv.innerHTML = "";
+
+      receiverid = userid;
+      let createh1 = document.createElement("h1");
+      createh1.innerHTML = `${displayName}`;
+      createh1.className = "dis-name";
+      userdiv.appendChild(createh1);
+
+      markChatsAsRead(userid);
+      getchat();
+    }
+
+    function receiver() {
+      if (receiverid) {
+        getchat();
+      } else {
+        chatmessage.innerHTML = "";
+        let creatediv = document.createElement("div");
+        creatediv.innerHTML = "Create A chat ";
+        creatediv.className = "alert-message";
+        chatmessage.appendChild(creatediv);
+      }
+    }
+    receiver();
+
+    function showSendButton() {
+      sendButton.style.display = "inline-block";
+      recordButton.style.display = "none";
+    }
+    function showMicButton() {
+      sendButton.style.display = "none";
+      recordButton.style.display = "inline-block";
+    }
+
+    inpchat.addEventListener("input", () => {
+      if (inpchat.value.trim() !== "" || selectedFile) {
+        showSendButton();
+      } else {
+        showMicButton();
+      }
+    });
+    let selectedFile = null;
+
+    document.getElementById("uploadimage").addEventListener("click", () => {
+      let imageinput = document.createElement("input");
+      imageinput.type = "file";
+      imageinput.accept = "image/*";
+
+      imageinput.onchange = (event) => {
+        selectedFile = event.target.files[0];
+        if (selectedFile) {
+          console.log("Selected file:", selectedFile.name);
+          console.log(selectedFile);
+          const reader = new FileReader();
+
+          reader.addEventListener("load", (e) => {
+            let existingPreview = document.getElementById("imgPreview");
+            if (existingPreview) {
+              existingPreview.remove();
+            }
+
+            let imgPreview = document.createElement("img");
+            imgPreview.src = e.target.result;
+            imgPreview.id = "imgPreview";
+
+            let chatInput = document.querySelector(".chatinput");
+            chatInput.insertBefore(
+              imgPreview,
+              chatInput.querySelector(".inputcont")
+            );
+            showSendButton();
+          });
+          reader.readAsDataURL(selectedFile);
+        }
+      };
+
+      imageinput.click();
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+      const recordingIndicator = document.createElement("div");
+      recordingIndicator.id = "recording-indicator";
+      recordingIndicator.style.display = "none";
+      recordingIndicator.style.color = "red";
+      document.querySelector(".chatinput").appendChild(recordingIndicator);
+      try {
+        document.getElementById("record-voice-note")
+      .addEventListener("click", async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = []
+        mediaRecorder.start();
+        startRecordingTimer();
+
+        showSendButton()
+         recordingIndicator.style.display = "block"
+         recordingIndicator.innerText = "Recording... 00:00";
+
+        mediaRecorder.addEventListener("dataavailable", (event) => {
+          audioChunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener("stop", async () => {
+          const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
+
+          clearInterval(recordingTimerInterval);
+          selectedAudioFile = audioBlob;
+          console.log(selectedAudioFile);
+          recordingIndicator.style.display = "none";
+          await sendchat();
+        });
+
+        setTimeout(() => mediaRecorder.stop(), 60000);
+      });
+        
+      } catch (error) {
+       
+       console.error("Failed to access microphone:", err);
+       alert("Microphone access was denied or is not available.");
+  
+      }
+   
+    })
+
+ function startRecordingTimer() {
+      recordingStartTime = Date.now();
+      recordingTimerInterval = setInterval(() => {
+     try {
+      const elapsedSeconds = Math.floor((Date.now() - recordingStartTime) / 1000);
+      const minutes = Math.floor(elapsedSeconds / 60).toString().padStart(2, "0");
+      const seconds = (elapsedSeconds % 60).toString().padStart(2, "0");
+ 
+      if ( document.getElementById("recording-indicator")) {
+        document.getElementById("recording-indicator").innerText = `Recording... ${minutes}:${seconds}`;
+      }
+     } catch (error) {
+      console.error("Error updating recording timer:", error);
+      clearInterval(recordingTimerInterval); 
+     }
+  }, 1000);
+}
+
+   
+    async function sendchat() {
+      if (receiverid) {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          return;
+        }
+
+        let audioURL = ""
+        console.log("Sending chat with selected audio file:", selectedAudioFile);
+        
+       if (selectedAudioFile) {
+          try {
+          const storageRef = stRef(storage, `audio/${Date.now()}.mp3`);
+          const snapshot = await uploadBytes(storageRef, selectedAudioFile);
+          audioURL = await getDownloadURL(snapshot.ref);
+         } catch (error) {
+           console.error("Error uploading audio:", error);
+         }
+       }
+       
+       
+        let imageURL = "";
+        if (selectedFile) {
+          const storageRef = stRef(storage, `images/${selectedFile.name}`);
+          const snapshot = await uploadBytes(storageRef, selectedFile);
+          imageURL = await getDownloadURL(snapshot.ref);
+        }
+
+        let date = new Date();
+        let chats = {
+          message: inpchat.value,
+          image: imageURL || "",
+          audio: audioURL || "",
+          time: date.toLocaleTimeString(),
+          date: date.toLocaleDateString(),
+          senderId: auth.currentUser.uid,
+          receiverId: receiverid,
+          isread: false,
+        };
+        let chatref = ref(database, "Allchat");
+        let idref = push(chatref);
+        set(idref, chats);
+
+        document.getElementById("inpchat").value = "";
+        let existingPreview = document.getElementById("imgPreview");
+        if (existingPreview) {
+          existingPreview.remove();
+        }
+        selectedFile = null;
+        selectedAudioFile = null;
+        showMicButton();
+      } else {
+        let receiverid = "";
+      }
+    }
+
+    function getchat() {
+      const chatref = ref(database, "Allchat");
+
+      onValue(chatref, (snapshot) => {
+        let chatData = snapshot.val();
+        let chatArray = [];
+        if (chatData) {
+          chatArray = Object.values(chatData);
+        }
+
+        let filterdchat = chatArray.filter(
+          (chat) =>
+            (chat.senderId.trim() === auth.currentUser.uid.trim() &&
+              chat.receiverId.trim() === receiverid.trim()) ||
+            (chat.receiverId.trim() === auth.currentUser.uid.trim() &&
+              chat.senderId.trim() === receiverid.trim())
+        );
+        console.log(filterdchat);
+
+        chatmessage.innerHTML = "";
+
+        if (filterdchat.length > 0) {
+          filterdchat.map((el, i) => {
+            let alignmentClass =
+              el.senderId == auth.currentUser.uid ? "sender" : "receiver";
+            let imageHtml = el.image
+              ? `<img src="${el.image}" alt="Chat image" style="max-width: 200px; max-height: 200px;"/>`
+              : "";
+              let audioHtml = el.audio
+          ? `<audio style="max-width: 200px;" controls>
+               <source src="${el.audio}" type="audio/mpeg">
+               Your browser does not support the audio element.
+             </audio>`
+          : "";
+            chatmessage.innerHTML += `<div class="chat_cont ${alignmentClass}">
+               ${imageHtml}
+             <h1 style="color:white;font-size:14px;">${el.message}</h1>
+              ${audioHtml}
+            <p style="color:white;font-size:10px;position: absolute; bottom:2%; left:2%;"> ${el.time}</p>
+            </div>`;
+          });
+        } else {
+          let creatediv = document.createElement("div");
+          creatediv.innerHTML = "You dont have chat with this User";
+          creatediv.className = "alert-message";
+          chatmessage.appendChild(creatediv);
+        }
+      });
+    }
+
+    function markChatsAsRead(receiverId) {
+      const chatRef = ref(database, "Allchat");
+
+      onValue(
+        chatRef,
+        (snapshot) => {
+          const chatData = snapshot.val();
+          if (chatData) {
+            const relevantChats = Object.keys(chatData).filter((chatId) => {
+              const chat = chatData[chatId];
+              return (
+                (chat.senderId === auth.currentUser.uid &&
+                  chat.receiverId === receiverId) ||
+                (chat.receiverId === auth.currentUser.uid &&
+                  chat.senderId === receiverId)
+              );
+            });
+            relevantChats.forEach((chatId) => {
+              const chat = chatData[chatId];
+              if (!chat.isread) {
+                const chatUpdateRef = ref(database, `Allchat/${chatId}`);
+                set(chatUpdateRef, {
+                  ...chat,
+                  isread: true,
+                });
+              }
+            });
+          }
+        },
+        { onlyOnce: true }
+      );
+    }
+
+    document.getElementById("logoutuser").addEventListener("click", () => {
+      signOut(auth)
+        .then(() => {
+          console.log("logout successful");
+        })
+        .catch((error) => {});
+    });
+
+    window.getuser = getuser;
+    window.sendchat = sendchat;
+    window.receiver = receiver;
+    window.showSendButton = showSendButton
+    window.showMicButton = showMicButton
+    window.startRecordingTimer = startRecordingTimer
+    window.getchat = getchat;
+    window.markChatsAsRead = markChatsAsRead;
+  </script>
+</html>
+<!-- <script src="./dashboard.js"></script> -->

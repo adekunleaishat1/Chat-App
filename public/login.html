@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+      
+      .loader-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.holder {
+  width: 30px;
+  height: 30px;
+}
+
+.preloader {
+  /* size */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  animation: rotatePreloader 2s infinite ease-in;
+}
+
+@keyframes rotatePreloader {
+  0% {
+    transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) rotateZ(-360deg);
+  }
+}
+
+.preloader div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.preloader div:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  width: 10%;
+  height: 10%;
+  background-color: #ffffff;
+  transform: translateX(-50%);
+  border-radius: 50%;
+}
+
+/* Individual circle animations */
+.preloader div:nth-child(1) {
+  transform: rotateZ(0deg);
+  animation: rotateCircle1 2s infinite linear;
+  z-index: 9;
+}
+@keyframes rotateCircle1 {
+  0%, 10% {
+    opacity: 0;
+  }
+  11% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  12%, 22% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+/* Repeat the above for each of the remaining 9 circles */
+
+.preloader div:nth-child(2) {
+  transform: rotateZ(36deg);
+  animation: rotateCircle2 2s infinite linear;
+  z-index: 8;
+}
+@keyframes rotateCircle2 {
+  0%, 20% {
+    opacity: 0;
+  }
+  21% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  22%, 32% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(3) {
+  transform: rotateZ(72deg);
+  animation: rotateCircle3 2s infinite linear;
+  z-index: 7;
+}
+@keyframes rotateCircle3 {
+  0%, 30% {
+    opacity: 0;
+  }
+  31% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  32%, 42% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+/* Repeat for the remaining circles */
+
+.preloader div:nth-child(4) {
+  transform: rotateZ(108deg);
+  animation: rotateCircle4 2s infinite linear;
+  z-index: 6;
+}
+@keyframes rotateCircle4 {
+  0%, 40% {
+    opacity: 0;
+  }
+  41% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  42%, 52% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(5) {
+  transform: rotateZ(144deg);
+  animation: rotateCircle5 2s infinite linear;
+  z-index: 5;
+}
+@keyframes rotateCircle5 {
+  0%, 50% {
+    opacity: 0;
+  }
+  51% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  52%, 62% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(6) {
+  transform: rotateZ(180deg);
+  animation: rotateCircle6 2s infinite linear;
+  z-index: 4;
+}
+@keyframes rotateCircle6 {
+  0%, 60% {
+    opacity: 0;
+  }
+  61% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  62%, 72% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(7) {
+  transform: rotateZ(216deg);
+  animation: rotateCircle7 2s infinite linear;
+  z-index: 3;
+}
+@keyframes rotateCircle7 {
+  0%, 70% {
+    opacity: 0;
+  }
+  71% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  72%, 82% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(8) {
+  transform: rotateZ(252deg);
+  animation: rotateCircle8 2s infinite linear;
+  z-index: 2;
+}
+@keyframes rotateCircle8 {
+  0%, 80% {
+    opacity: 0;
+  }
+  81% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  82%, 92% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(9) {
+  transform: rotateZ(288deg);
+  animation: rotateCircle9 2s infinite linear;
+  z-index: 1;
+}
+@keyframes rotateCircle9 {
+  0%, 90% {
+    opacity: 0;
+  }
+  91% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  92%, 100% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+.preloader div:nth-child(10) {
+  transform: rotateZ(324deg);
+  animation: rotateCircle10 2s infinite linear;
+  z-index: 0;
+}
+@keyframes rotateCircle10 {
+  0%, 100% {
+    opacity: 0;
+  }
+  101% {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  102%, 112% {
+    transform: rotateZ(-36deg);
+  }
+  100% {
+    transform: rotateZ(-324deg);
+    opacity: 1;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="align">
+
+        <div class="grid align__item">
+      
+          <div class="register">
+      
+            <svg xmlns="http://www.w3.org/2000/svg" class="site__logo" width="56" height="84" viewBox="77.7 214.9 274.7 412"><defs><linearGradient id="a" x1="0%" y1="0%" y2="0%"><stop offset="0%" stop-color="#8ceabb"/><stop offset="100%" stop-color="#378f7b"/></linearGradient></defs><path fill="url(#a)" d="M215 214.9c-83.6 123.5-137.3 200.8-137.3 275.9 0 75.2 61.4 136.1 137.3 136.1s137.3-60.9 137.3-136.1c0-75.1-53.7-152.4-137.3-275.9z"/></svg>
+      
+            <h2>Sign In</h2>
+      
+            <form action="" method="post" class="form">
+              
+              <div class="form__field">
+                <input id="email" type="email" placeholder="info@mailaddress.com">
+              </div>
+      
+              <div class="form__field">
+                <input id="password" type="password" placeholder="••••••••••••">
+              </div>
+      
+              <div class="form__field">
+                <!-- <input id="loginuser" type="submit" value="Log in"> -->
+                <button id="loginuser">Log in</button>
+              </div>
+      
+            </form>
+      
+            <p>Don't have an accout? <a class="link" href="index.html">Sign Up</a></p>
+      
+          </div>
+      
+        </div>
+      
+      </div>
+</body>
+</html>
+<script type="module">
+    let isloading = false
+    console.log(isloading);
+    let userindex = 0
+    let users = []
+    let preloader = `<div class="spinner-grow text-black" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>`
+    
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, set ,onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+
+  
+    const firebaseConfig = {
+        apiKey: "AIzaSyANrzEtiTBG7SYnQJvG0-K39BVr5zMa1Tw",
+        authDomain: "december-class.firebaseapp.com",
+        databaseURL: "https://december-class-default-rtdb.firebaseio.com",
+        projectId: "december-class",
+        storageBucket: "december-class.appspot.com",
+        messagingSenderId: "345903235353",
+        appId: "1:345903235353:web:90c6f352bf6c28aeb44588"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const database = getDatabase();
+    console.log(auth);
+
+  
+    document.getElementById("loginuser").addEventListener("click", (e)=>{
+        e.preventDefault()
+        console.log(email.value, password.value);
+        isloading = true
+        loader()
+        console.log(isloading);
+        signInWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+          
+          
+        const user = userCredential.user;
+        console.log(user);
+        let userdetails = {
+            displayName: user.displayName,
+            Email:user.email,
+            id: user.uid
+        }
+        console.log(users);
+       let existuser =  users.find((user)=> user.Email == userdetails.Email)
+       console.log(existuser, "does user exist");
+       if (!existuser) {
+        const userref = ref(database, `allusers/${userindex}`)
+         set(userref, userdetails)
+         setTimeout(() => {
+            isloading = false
+            loader()
+              window.location.href = "dashboard.html"
+          }, 3000);
+        
+       }else{
+        setTimeout(() => {
+            isloading = false
+            loader()
+              window.location.href = "dashboard.html"
+          }, 3000);
+       }
+       
+       })
+       .catch((error) => {
+        isloading = false
+        loader()
+        const errorCode = error.code;
+        const errorMessage = error.message;
+       });
+    })
+
+    function loader() {
+      let loginbutton = document.getElementById("loginuser")
+    if (isloading == true) {
+      loginbutton.innerHTML = preloader
+    }else{
+      loginbutton.innerHTML = "Log in"
+    }
+    }
+
+    loader()
+
+
+       const userRef = ref(database, "allusers")
+    onValue(userRef, (snapshot)=>{
+           users = snapshot.val()
+          if (users) {
+            userindex = users.length
+          }else{
+            userindex = 0
+          }
+    })
+  </script>
